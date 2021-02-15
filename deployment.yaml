@@ -6,8 +6,8 @@ spec:
   selector:
     app: server
   ports:
-  - name: udp
-    protocol: UDP
+  - name: tcp
+    protocol: TCP
     port: 1453
     targetPort: 12235
   type: LoadBalancer

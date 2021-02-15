@@ -1,18 +1,32 @@
 # KuberNerds
 CSE561 Winter2021
 
-Common Commands
+# Common Commands
 
-eval $(minikube docker-env)
+- Run docker in minikube
 
-docker build -f Dockerfile -t server:latest .
+```eval $(minikube docker-env)```
 
-k create -f deployment.yaml
+- Build docker image
 
-k port-forward service/service-server 63383:1453
+```docker build -f Dockerfile -t server:latest .```
 
-minikube service service-server --url
+- Create k8s deployment
 
-kubectl exec -it 461server-85b7dbd976-rbrq9 bash
+```k create -f deployment.yaml```
 
-client -> 12345 tunnel -> 1453 K8s -> 12235 Docker
+- Port forwarding
+
+```k port-forward service/service-server 63383:1453```
+
+- Minikube tunneling
+
+```minikube service service-server --url```
+
+- ssh into k8s pod
+
+```kubectl exec -it <pod> -- bash```
+
+- use Wireshark in specified pod
+
+```k sniff <pod> server```
