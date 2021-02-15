@@ -1,7 +1,7 @@
 import socket
 
 SERVER_ADDR = '127.0.0.1'
-TCP_PORT = 12235
+TCP_PORT = 63383
 
 def main():
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
