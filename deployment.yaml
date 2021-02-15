@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: service-461server
+  name: service-server
 spec:
   selector:
-    app: 461server
+    app: server
   ports:
   - name: udp
     protocol: UDP
@@ -16,20 +16,20 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: 461server
+  name: server
 spec:
   selector:
     matchLabels:
-      app: 461server
+      app: server
   replicas: 3
   template:
     metadata:
       labels:
-        app: 461server
+        app: server
     spec:
       containers:
-      - name: 461server
-        image: 461server:latest
+      - name: server
+        image: server:latest
         imagePullPolicy: Never
         ports:
         - containerPort: 12235

@@ -5,7 +5,7 @@ Common Commands
 
 eval $(minikube docker-env)
 
-docker build -f Dockerfile -t 461server:latest .
+docker build -f Dockerfile -t server:latest .
 
 k create -f deployment.yaml
 
