@@ -2,7 +2,7 @@ import requests
 
 # Address and port number for load balancer
 SERVER_ADDR = '127.0.0.1'
-TCP_PORT = 46715 # 12235 for local testing, port depends on what is exposed for lb
+TCP_PORT = 45573 # 12235 for local testing, port depends on what is exposed for lb
 TIMES = 1
 
 def main():

@@ -6,9 +6,7 @@ spec:
   selector:
     app: simple-service-server
   ports:
-  - name: tcp
-    protocol: TCP
-    port: 1453
+  - port: 1453
     targetPort: 12235
   type: LoadBalancer
 

@@ -5,7 +5,8 @@ TCP_PORT = 12235
 
 @app.route('/')
 def hello():
-    hello = request.form.get('hello')
+    hello = request.args.get('hello')
+    print(hello, request.args)
     if hello: 
         return "Hello Leiyi!"
     else:
