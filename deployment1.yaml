@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: simple-service-lb
+spec:
+  selector:
+    app: simple-service-server
+  ports:
+  - name: tcp
+    protocol: TCP
+    port: 1453
+    targetPort: 12235
+  type: LoadBalancer
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-service-server
+spec:
+  selector:
+    matchLabels:
+      app: simple-service-server
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: simple-service-server
+    spec:
+      containers:
+      - name: simple-service-server
+        image: simple-service-server:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 12235
