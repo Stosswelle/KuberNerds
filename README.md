@@ -39,5 +39,8 @@ CSE561 Winter2021
     - ```kubectl sniff <pod_name> <container_name>```
     <!-- kubectl sniff server-65987794c7-5kldn server -->
 
+- Expose prometheus through minikube
+   - ```minikube service prometheus-server-np```
+
 - Stop Minikube
     - ```minikube stop```
