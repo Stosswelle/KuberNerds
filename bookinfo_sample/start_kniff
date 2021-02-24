@@ -1,8 +1,8 @@
-kubectl sniff productpage-v1-77476b9568-59fvc productpage &
-kubectl sniff ratings-v1-59cf5cd678-5rc74 ratings &
-kubectl sniff reviews-v1-59bf6bbc6-c4tfh reviews &
-kubectl sniff reviews-v2-85886d4fdb-hg9k5 reviews &
-kubectl sniff reviews-v3-79689bb748-g4kvj reviews &
-kubectl sniff details-v1-55878866f4-nsvqt details
+kubectl sniff $(kubectl get pod -l app=productpage -o jsonpath='{.items[0].metadata.name}') productpage &
+kubectl sniff $(kubectl get pod -l app=ratings -o jsonpath='{.items[0].metadata.name}') ratings &
+kubectl sniff $(kubectl get pod -l app=reviews -o jsonpath='{.items[0].metadata.name}') reviews &
+kubectl sniff $(kubectl get pod -l app=reviews -o jsonpath='{.items[1].metadata.name}') reviews &
+kubectl sniff $(kubectl get pod -l app=reviews -o jsonpath='{.items[2].metadata.name}') reviews &
+kubectl sniff $(kubectl get pod -l app=details -o jsonpath='{.items[0].metadata.name}') details
 
 # "$(kubectl get pod -l app=ratings -o jsonpath='{.items[0].metadata.name}')"
