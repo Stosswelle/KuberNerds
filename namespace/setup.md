@@ -21,6 +21,7 @@
     k config use-context minikube
 
     minikube service prometheus-server-np --namespace=prom
+
 ```
 
 cpu usage query:
