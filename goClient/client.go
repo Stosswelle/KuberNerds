@@ -9,19 +9,22 @@ import (
 
 const requestAmount = 100
 const goRoutineCount = 5
+const sleepTimeMilli = 400
 
 func MakeRequest(url string, ch chan<- string) {
 	for i := 0; i < requestAmount; i++ {
-
-		start := time.Now()
-		resp, err := http.Get(url)
-		secs := time.Since(start).Milliseconds()
-		code := 404
-		if err == nil {
-			code = resp.StatusCode
-		}
-		ch <- fmt.Sprintf("%d milliseconds elapsed with status code: %d", secs, code)
-		time.Sleep(440 * time.Millisecond)
+		func() {
+			start := time.Now()
+			resp, err := http.Get(url)
+			milliSecs := time.Since(start).Milliseconds()
+			if err != nil {
+				ch <- fmt.Sprint("HTTP call failed: ", err)
+			}
+			defer resp.Body.Close()
+			code := resp.StatusCode
+			ch <- fmt.Sprintf("%d milliseconds elapsed with status code: %d", milliSecs, code)
+		}()
+		time.Sleep(sleepTimeMilli * time.Millisecond)
 	}
 }
 
