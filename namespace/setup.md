@@ -18,6 +18,8 @@
 
     helm install prometheus prometheus-community/prometheus
 
+    kubectl expose service prometheus-server --type=NodePort --target-port=9090 --name=prometheus-server-np
+
     k config use-context minikube
 
     minikube service prometheus-server-np --namespace=prom
