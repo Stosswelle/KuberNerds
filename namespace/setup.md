@@ -29,5 +29,7 @@
 cpu usage query:
 
 ```promsql
-rate(container_cpu_usage_seconds_total{name!="",name !~ ".*POD.*", id !~".*docker.*",pod=~"review.*|rating.*|detail.*|productpage.*"}[5m])
+sum(rate(container_cpu_usage_seconds_total{name!="",name !~ ".*POD.*", id !~".*docker.*",pod=~"review.*|rating.*|detail.*|productpage.*"}[2m]))
+
+sum(container_memory_usage_bytes{name!="",name !~ ".*POD.*", id !~".*docker.*",pod=~"review.*|rating.*|detail.*|productpage.*"})
 ```
