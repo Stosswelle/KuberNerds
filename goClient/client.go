@@ -7,22 +7,24 @@ import (
 	"time"
 )
 
-const requestAmount = 100
-const goRoutineCount = 5
-const sleepTimeMilli = 400
+const requestAmount = 1500
+const goRoutineCount = 1
+const sleepTimeMilli = 50
 
-func MakeRequest(url string, ch chan<- string) {
+func MakeRequest(url string, ch chan<- int64) {
 	for i := 0; i < requestAmount; i++ {
 		func() {
 			start := time.Now()
 			resp, err := http.Get(url)
 			milliSecs := time.Since(start).Milliseconds()
 			if err != nil {
-				ch <- fmt.Sprint("HTTP call failed: ", err)
+				// ch <- fmt.Sprint("HTTP call failed: ", err)
+				ch <- 404
 			}
 			defer resp.Body.Close()
-			code := resp.StatusCode
-			ch <- fmt.Sprintf("%d milliseconds elapsed with status code: %d", milliSecs, code)
+			// code := resp.StatusCode
+			// ch <- fmt.Sprintf("%d milliseconds elapsed with status code: %d", milliSecs, code)
+			ch <- milliSecs
 		}()
 		time.Sleep(sleepTimeMilli * time.Millisecond)
 	}
@@ -30,7 +32,7 @@ func MakeRequest(url string, ch chan<- string) {
 
 func main() {
 	start := time.Now()
-	ch := make(chan string)
+	ch := make(chan int64)
 	if len(os.Args) < 3 {
 		fmt.Println("usage requires 2 arguments: HOST_ADDRESS and PORT_NUMBER")
 		return
@@ -42,9 +44,13 @@ func main() {
 	for i := 0; i < goRoutineCount; i++ {
 		go MakeRequest(url, ch)
 	}
+	var milliSecs int64 = 0
 	for i := 0; i < requestAmount*goRoutineCount; i++ {
-		fmt.Printf("the %dth request took ", i)
-		fmt.Println(<-ch)
+		// fmt.Printf("the %dth request took ", i)
+		// fmt.Println(<-ch)
+		milliSecs += <-ch
 	}
+	fmt.Printf("%d requests are sent in total\n", requestAmount*goRoutineCount)
+	fmt.Printf("%.2fs spent waiting for response\n", float64(milliSecs)/1000.0)
 	fmt.Printf("%.2fs elapsed\n", time.Since(start).Seconds())
 }
