@@ -13,4 +13,4 @@ def hello():
         return 'Hellon\'t Leiyi'
 
 if __name__ == '__main__':
-    app.run(debug=True, port=TCP_PORT)
+    app.run(host='0.0.0.0', debug=True, port=TCP_PORT)

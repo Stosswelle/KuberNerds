@@ -2,6 +2,8 @@
 # How to set up namespace and Prometheus
 
 ```bash
+    k describe po | egrep "^Name|^Node"
+
     k create -f namespace-prom.json
 
     k get namespaces --show-labels
@@ -16,15 +18,21 @@
 
     helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 
-    helm install prometheus prometheus-community/prometheus
+    helm install prometheus prometheus-community/prometheus --namespace=prom 
+
+    k get po -n=prom
 
     kubectl expose service prometheus-server --type=NodePort --target-port=9090 --name=prometheus-server-np
+
+    helm uninstall prometheus
 
     k config use-context minikube
 
     minikube service prometheus-server-np --namespace=prom
 
 ```
+
+Set up expose service. Allow for inbound traffic on assigned port for prometheus-server-np. Access. Profit. 
 
 cpu usage query:
 
