@@ -21,13 +21,11 @@ func MakeRequest(url string, ch chan<- int64) {
 			resp, err := http.Get(url)
 			milliSecs := time.Since(start).Milliseconds()
 			if err != nil {
-				// ch <- fmt.Sprint("HTTP call failed: ", err)
-				ch <- 404
+				ch <- milliSecs
+				os.Stderr.WriteString(err.Error() + "\n")
 				return
 			}
 			defer resp.Body.Close()
-			// code := resp.StatusCode
-			// ch <- fmt.Sprintf("%d milliseconds elapsed with status code: %d", milliSecs, code)
 			ch <- milliSecs
 		}()
 		bar.Increment()
@@ -40,7 +38,7 @@ func main() {
 	start := time.Now()
 	ch := make(chan int64)
 	if len(os.Args) < 3 {
-		fmt.Println("usage requires 2 arguments: HOST_ADDRESS and PORT_NUMBER")
+		os.Stderr.WriteString("error: usage requires 2 arguments: HOST_ADDRESS and PORT_NUMBER\n")
 		return
 	}
 	var host string = os.Args[1]
@@ -52,8 +50,6 @@ func main() {
 	}
 	var milliSecs int64 = 0
 	for i := 0; i < requestAmount*goRoutineCount; i++ {
-		// fmt.Printf("the %dth request took ", i)
-		// fmt.Println(<-ch)
 		milliSecs += <-ch
 	}
 	fmt.Printf("%d requests are sent in total\n", requestAmount*goRoutineCount)
