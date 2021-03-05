@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/cheggaaa/pb/v3"
 )
 
 const requestAmount = 1500
@@ -12,6 +14,7 @@ const goRoutineCount = 1
 const sleepTimeMilli = 50
 
 func MakeRequest(url string, ch chan<- int64) {
+	bar := pb.StartNew(requestAmount)
 	for i := 0; i < requestAmount; i++ {
 		func() {
 			start := time.Now()
@@ -20,14 +23,17 @@ func MakeRequest(url string, ch chan<- int64) {
 			if err != nil {
 				// ch <- fmt.Sprint("HTTP call failed: ", err)
 				ch <- 404
+				return
 			}
 			defer resp.Body.Close()
 			// code := resp.StatusCode
 			// ch <- fmt.Sprintf("%d milliseconds elapsed with status code: %d", milliSecs, code)
 			ch <- milliSecs
 		}()
+		bar.Increment()
 		time.Sleep(sleepTimeMilli * time.Millisecond)
 	}
+	bar.Finish()
 }
 
 func main() {
