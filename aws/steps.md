@@ -8,8 +8,10 @@ eksctl create cluster \
 ```
 
 IAM stuff: 
-TODO
-
+- Set up groups with names, save access keys somewhere
+- Have people log into aws with IAM usernames 
+- Set up cluster using eksctl
+- Set up kubeconfig to add them as members to a group
 
 For prometheus: 
 See namespaces
@@ -21,5 +23,7 @@ To delete the cluster:
 eksctl delete cluster --region=us-west-2 --name=istio-on-eks
 
 Then you need to shut down: 
+- NATs
 - VPCs
-- 
+- EC2 volumes
+
