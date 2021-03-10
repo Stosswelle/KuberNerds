@@ -37,8 +37,8 @@ func MakeRequest(url string, ch chan<- int64) {
 func main() {
 	start := time.Now()
 	ch := make(chan int64)
-	if len(os.Args) < 3 {
-		os.Stderr.WriteString("error: usage requires 2 arguments: HOST_ADDRESS and PORT_NUMBER\n")
+	if len(os.Args) < 2 {
+		os.Stderr.WriteString("error: usage requires 1 arguments: HOST_ADDRESS:PORT_NUMBER\n")
 		return
 	}
 	var host string = os.Args[1]
