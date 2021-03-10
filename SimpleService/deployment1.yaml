@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
       - name: simple-service-server
-        image: simple-service-server:latest
-        imagePullPolicy: Never
+        image: public.ecr.aws/g6f8c0h5/kubernerds:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 12235
