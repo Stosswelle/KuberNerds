@@ -42,8 +42,7 @@ func main() {
 		return
 	}
 	var host string = os.Args[1]
-	var port string = os.Args[2]
-	url := fmt.Sprintf("http://%s:%s/productpage", host, port)
+	url := fmt.Sprintf("http://%s", host)
 	fmt.Println(url)
 	for i := 0; i < goRoutineCount; i++ {
 		go MakeRequest(url, ch)
