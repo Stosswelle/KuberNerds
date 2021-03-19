@@ -51,6 +51,7 @@ func main() {
 	for i := 0; i < requestAmount*goRoutineCount; i++ {
 		milliSecs += <-ch
 	}
+	close(ch)
 	fmt.Printf("%d requests are sent in total\n", requestAmount*goRoutineCount)
 	fmt.Printf("%.2fs spent waiting for response\n", float64(milliSecs)/1000.0)
 	fmt.Printf("%.2fs elapsed\n", time.Since(start).Seconds())
